@@ -10,7 +10,7 @@ void crea_mat(int v[N][N]){      //inserimento primo utente e creazione della gr
     do{
         printf("Inserimento: ");
         scanf(" %s", ins);
-    }while( !( 'A' <= ins[0] <= 'J') || !(ins[1] == '1' && !(ins[2] == '0' || ins[2] == '\0' )) || !('1' <= ins[1] <= '9'));       //da controllare
+    }while( !( 'A' <= ins[0] <= 'J') || !(ins[1] == '1' && (ins[2] == '0' || ins[2] == '\0' )) || !('1' <= ins[1] <= '9'));
         do{
           printf("Inserire 1 per mettere la nave in verticale, 2 per inserirla in orizzontale");
           scanf("%d", &scelta);
