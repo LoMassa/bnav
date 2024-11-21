@@ -26,7 +26,7 @@ void inserimento(int lunghnav, char v[][10][3]){
             }
           
           
-            scanf("%c", &ins);
+            scanf(" %c", &ins);
             //muovi basso
             if(ins == 's'){
                 if(k <= 9){
@@ -92,4 +92,3 @@ void main(){
      inserimento(1, v);
      printf("Hello");
 }
-
