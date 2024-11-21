@@ -1,28 +1,95 @@
 #include <stdio.h>
-#define N 10
-void crea_mat(int v[N][N]){      //inserimento primo utente e creazione della griglia (matrice)
-  int colonna;
-  int riga;
-  char ins[3];
-  int scelta;
-  for(int i = 0; i<6; i++){
-      
-    do{
-        printf("Inserimento: ");
-        scanf(" %s", ins);
-    }while( !( 'A' <= ins[0] <= 'J') || !(ins[1] == '1' && (ins[2] == '0' || ins[2] == '\0' )) || !('1' <= ins[1] <= '9'));
+#include <stdbool.h>
+void inserimento(int lunghnav, char v[][10][3]){
+     //variabili
+     
+     int k = 1, k1=1;          //riga, memoria di k (usata nel printf della griglia per rimuovere l'elemento alla precedente posizione)
+     int j = 1, j1=1;          //colonna, memoria di j
+     char ins;
+     
+
         do{
-          printf("Inserire 1 per mettere la nave in verticale, 2 per inserirla in orizzontale");
-          scanf("%d", &scelta);
-        }while(!(scelta == 1 || scelta == 2));
-        if(scelta = 1);
-        
+          //posizione iniziale della nave
+          if(k==1 && j==1){
+               v[0][0][0] = '[';
+               v[0][0][1] = 'x';
+               v[0][0][2] = ']';
+          }
+          //printf della matrice
+          for(int i = 0; i<10; i++){
+               for(int n = 0; n<10; n++){
+                    for(int m = 0; m<3; m++){
+                         printf("%c", v[i][n][m]);
+                    }
+               }
+               printf("\n");
+            }
           
+          
+            scanf("%c", &ins);
+            //muovi basso
+            if(ins == 's'){
+                if(k <= 9){
+                    k1 = k;
+                    j1 = j;
+                    k += 1;    
+                    
+                }
+            }
+            //muovi alto
+            if(ins == 'w'){
+                if(k > 1){
+                    k1 = k;
+                    j1 = j;
+                    k -= 1;
+                    
+                }
+            }
+            //muovi sx
+            if(ins == 'a'){
+                if(j > 1){
+                    j1 = j;
+                    k1 = k;
+                    j-=1; 
+                    
+                }
+            }
+            //muovi dx
+            if(ins == 'd'){
+                if(j <= 9){
+                    j1 = j;
+                    k1 = k;
+                    j += 1;
+                    
+                }
+            }
+            v[k-1][j-1][0] = '[';
+            v[k-1][j-1][1] = 'x';
+            v[k-1][j-1][2] = ']';
+            v[k1-1][j1-1][0] = '[';
+            v[k1-1][j1-1][1] = '-';
+            v[k1-1][j1-1][2] = ']';
+            
+        }while(ins != 'l');
         
-    }
+        
+    
+         
 }
 
+
 void main(){
-    int v[N][N];
-    crea_mat(v);
+     char v[10][10][3];
+     for(int i = 0; i<10; i++){
+               for(int n = 0; n<10; n++){
+                    v[i][n][0] = '[';
+                    v[i][n][1] = '-';
+                    v[i][n][2] = ']';
+               }
+     }
+     
+     printf("\n");
+     inserimento(1, v);
+     printf("Hello");
 }
+
