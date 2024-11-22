@@ -1,5 +1,15 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <Windows.h>
+
+bool controllo(int lunghnav, char v[][10][3], int k, int j, int rotazione){
+    for(int i = 0; i > lunghnav; i++){
+        return !(v[k-1+(1-rotazione)*i][j-1 + rotazione*i][1] == 'x');
+    }
+    return true;
+}
+
 void inserimento(int lunghnav, char v[][10][3]){
     //variabili
     
@@ -10,6 +20,7 @@ void inserimento(int lunghnav, char v[][10][3]){
     int rotazione1=1, k1=1, j1=1;     //memoria di rotazione, k, j
     char ins;
     do{
+        printf("\033[H\033[J");
         //posizione iniziale della nave
         if(inizio){
             for(int o = 0; o < lunghnav; o++){
@@ -19,6 +30,8 @@ void inserimento(int lunghnav, char v[][10][3]){
         }
         inizio = 0;
     }
+    
+    
         //printf della matrice
         for(int i = 0; i<10; i++){
             for(int n = 0; n<10; n++){
@@ -89,10 +102,12 @@ void inserimento(int lunghnav, char v[][10][3]){
         
     }while(ins != 'l');
     
+    printf("\033[H\033[J");
     
-
-        
 }
+    
+        
+
 
 
 void main(){
@@ -106,7 +121,13 @@ void main(){
     }
     
     printf("\n");
+    inserimento(1, v);
     inserimento(2, v);
+    inserimento(3, v);
+    inserimento(4, v);
+    inserimento(5, v);
+
+    
 
     printf("Hello");
 }
