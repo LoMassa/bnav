@@ -28,20 +28,33 @@ bool controllo_rot(int lunghnav, int y, int x, int p2[][2], int lp2, int rotazio
             }
             else{
                 if(y-1 < p2[0][0] && y+lunghnav-2 >= p2[0][0]){
-                    printf("y = %d, y + lunghnav-2 = %d, p2[0][0] = %d", y, y+lunghnav-2, p2[0][0]);
-                    Sleep(400);
                     return false;
-                }
-                else{
-                    printf("aaaaaa\n");
-                    printf("y = %d, y + lunghnav-2 = %d, p2[0][0] = %d", y, y+lunghnav-2, p2[0][0]);
-                    Sleep(400);
-                    return true;
-                }
             }
         }
-    }
-    return true;
+
+        
+        }
+        else{
+                
+                if(y-1<=p2[0][0]){
+                    controllo = true;
+                    printf("y: %d, y+ln: %d p2[0][0]: %d, p2[lp2-1][0]: %d", y-1, y + lunghnav-2, p2[0][0], p2[lp2-1][0]);
+                    Sleep(300);
+                    }
+                
+
+                if(!controllo){
+                    printf("y: %d, y+ln: %d p2[0][0]: %d, p2[lp2-1][0]: %d", y-2, y + lunghnav-2, p2[0][0], p2[lp2-1][0]);
+                    return true;
+                }
+                else{
+                    if(x-1<=p2[0][1] && x-1+lunghnav>=p2[lp2-1][1])
+                        return false;
+                }
+            }
+    
+}
+return true;
 }
 bool controllo(int lunghnav, char v[][10][3], int y, int x, int rotazione, int p2[][2], int lp2, int movimento){
     if(lunghnav == 1)
@@ -212,7 +225,7 @@ void inserimento(int lunghnav, char v[][10][3], int posizioni[][2], int p1[][2],
                 rotazione = !rotazione;  
             }
             else{
-                if(x + lunghnav - 1 <= 10)
+                if(x + lunghnav - 1 <= 10 && controllo_rot(lunghnav, y, x, p1, lp1, 0))
                         rotazione = !rotazione;
             } 
                 
