@@ -15,32 +15,88 @@ bool controllo(int lunghnav, char v[][10][3], int y, int x, int rotazione, int p
     bool controllo=false;
     
     if(!null_len(p2)){
-        
-        if(movimento == 2){
+        if(movimento==1){
             for(int i = 0; i<lunghnav; i++){
                 for(int k = 0; k<lp2; k++){
-                    if(p2[k][0] == y+(i)*(1-rotazione)){
+                    if(p2[k][0] == y-2){
                         controllo = true;
-                        printf("trovatooooo\n\n");
-                        Sleep(100);
+                        
                     }
                 }
             }
             if(!controllo)
                 return true;
             else{
-                printf("\naaaa\n");
-                Sleep(100);
                 for(int i = 0; i<lunghnav; i++){
                     for(int k = 0; k<lp2; k++){
-                        if(p2[k][1] == x-1+i*(rotazione)){ 
-                            printf("trovato22222\n\n");
-                            Sleep(100); 
+                        if(p2[k][1] == x-1+i*(rotazione)){  
                             return false;
                             
                         }
                     }
                     
+                }
+            }
+        }
+
+        if(movimento == 2){
+            for(int i = 0; i<lunghnav; i++){
+                for(int k = 0; k<lp2; k++){
+                    if(p2[k][0] == y+(i)*(1-rotazione)){
+                        controllo = true;
+                        
+                    }
+                }
+            }
+            if(!controllo)
+                return true;
+            else{
+                for(int i = 0; i<lunghnav; i++){
+                    for(int k = 0; k<lp2; k++){
+                        if(p2[k][1] == x-1+i*(rotazione)){  
+                            return false;
+                            
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+        if(movimento == 3){
+            for(int i = 0; i<lunghnav; i++){
+                for(int k = 0; k<lp2; k++){
+                    if(p2[k][1] == x+i*rotazione)
+                        controllo = true;
+                }
+            }
+            if(!controllo)
+                return true;
+            else{
+                for(int i = 0; i<lunghnav; i++){
+                    for(int k = 0; k<lp2; k++){
+                        if(p2[k][0] == y-1+i*(1-rotazione))
+                            return false;
+                    }
+                }
+            }
+        }
+
+        if(movimento == 4){
+            for(int i = 0; i<lunghnav; i++){
+                for(int k = 0; k<lp2; k++){
+                    if(p2[k][1] == x-2)
+                        controllo = true;
+                }
+            }
+            if(!controllo)
+                return true;
+            else{
+                for(int i = 0; i<lunghnav; i++){
+                    for(int k = 0; k<lp2; k++){
+                        if(p2[k][0] == y-1+i*(1-rotazione))
+                            return false;
+                    }
                 }
             }
         }
