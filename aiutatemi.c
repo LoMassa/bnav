@@ -1,76 +1,59 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-
+#include <Windows.h>
 bool null_len(int v[][2]){
     if(v[0][0] == '\0' || v[0][1]== '\0')
         return true;
     return false;
 }
-bool controllo(int lunghnav, char v[][10][3], int y, int x, int rotazione, int p1[][2], int lp1, int p2[][2], int lp2, int p3[][2], int lp3, int p4[][2], int lp4, int movimento){
+bool controllo(int lunghnav, char v[][10][3], int y, int x, int rotazione, int p2[][2], int lp2, int movimento){
     if(lunghnav == 1)
         return true;
 
     
+    bool controllo=false;
     
-    for(int i = 0; i<lp1-1;i++) {
-        for(int n = 0; n<lunghnav; n++){
-                
-                if(p1[i][0] == y-1 + (1 - rotazione)*n) //erorre
-                    return false;
-                if(p1[i][1] == x-1 + (rotazione)*n)     //errore
-                    return false; 
+    if(!null_len(p2)){
+        
+        if(movimento == 2){
+            for(int i = 0; i<lunghnav; i++){
+                for(int k = 0; k<lp2; k++){
+                    if(p2[k][0] == y+(i)*(1-rotazione)){
+                        controllo = true;
+                        printf("trovatooooo\n\n");
+                        Sleep(100);
+                    }
+                }
             }
-    }
-    if(movimento == 2){
-        for(int i = 0; i<lp2; i++){
-            printf("y:%d   x:%d\n", p2[i][0], p2[i][1]);
-            printf("Posizione:%d    Posizione:%d\n", y, x);
-        }
-        //for(int i = 0; i<2^5 -1; i++){}
-    	if(!null_len(p2)){
-    		for(int i = 0; i<lunghnav; i++){
-    			for(int k = 0; k<lp1; k++){
-    				if(p2[k][0] != x + (i - 1)*rotazione && k == lp2-1)
-    					return true;
-				}
-			}
-			
-			for(int i = 0; i<lunghnav; i++){
-				for(int k = 0; k<lp2; k++){
-					if(p2[k][1] == y-1+i*(1-rotazione))
-						return false;
-				}
-			}
-    }
-    }
-    
-    if(!null_len(p3)){
-        for(int i = 0; i<lp3;i++) {
-            for(int n = 0; n<lunghnav; n++){
+            if(!controllo)
+                return true;
+            else{
+                printf("\naaaa\n");
+                Sleep(100);
+                for(int i = 0; i<lunghnav; i++){
+                    for(int k = 0; k<lp2; k++){
+                        if(p2[k][1] == x-1+i*(rotazione)){ 
+                            printf("trovato22222\n\n");
+                            Sleep(100); 
+                            return false;
+                            
+                        }
+                    }
                     
-                    if(p3[i][0] == y-1 + (1 - rotazione)*n)
-                        return false;
-                    if(p3[i][1] == x-1 + (rotazione)*n)
-                        return false; 
                 }
+            }
         }
-    }
-    if(!null_len(p4)){
-        for(int i = 0; i<lp4;i++) {
-            for(int n = 0; n<lunghnav; n++){
-                    
-                    if(p4[i][0] == y-1 + (1 - rotazione)*n)
-                        return false;
-                    if(p4[i][1] == x-1 + (rotazione)*n)
-                        return false; 
-                }
-        }
-    }
-	
+
+
+
+
+    
+   
     
     
-    return true;
+}
+return true;
 }
 void inserimento(int lunghnav, char v[][10][3], int posizioni[][2], int p1[][2], int p2[][2], int p3[][2], int p4[][2], int lp1, int lp2, int lp3, int lp4){
     //variabili
@@ -103,7 +86,7 @@ void inserimento(int lunghnav, char v[][10][3], int posizioni[][2], int p1[][2],
         x1 = x;
         //muovi basso
         if(ins == 's'){
-            if((y + (lunghnav -1) * (1 - rotazione)) <= 9 && controllo(lunghnav, v, y, x, rotazione, p1, lp1, p2, lp2, p3, lp3, p4, lp4, 2)){ 
+            if((y + (lunghnav -1) * (1 - rotazione)) <= 9 && controllo(lunghnav, v, y, x, rotazione, p1, lp1, 2) && controllo(lunghnav, v, y, x, rotazione, p2, lp2, 2) && controllo(lunghnav, v, y, x, rotazione, p3, lp3, 2) && controllo(lunghnav, v, y, x, rotazione, p4, lp4, 2)){ 
                 
                 y += 1;    
                 
@@ -111,21 +94,21 @@ void inserimento(int lunghnav, char v[][10][3], int posizioni[][2], int p1[][2],
         }
         //muovi alto
         if(ins == 'w'){
-            if(y > 1&& controllo(lunghnav, v, y, x, rotazione, p1, lp1, p2, lp2, p3, lp3, p4, lp4, 1)){
+            if(y > 1 && controllo(lunghnav, v, y, x, rotazione, p1, lp1, 1) && controllo(lunghnav, v, y, x, rotazione, p2, lp2, 1) && controllo(lunghnav, v, y, x, rotazione, p3, lp3, 1) && controllo(lunghnav, v, y, x, rotazione, p4, lp4, 1)){
                 y -= 1;
                 
             }
         }
         //muovi sx
         if(ins == 'a'){
-            if(x > 1 && controllo(lunghnav, v, y, x, rotazione, p1, lp1, p2, lp2, p3, lp3, p4, lp4, 4)){
+            if(x > 1 && controllo(lunghnav, v, y, x, rotazione, p1, lp1, 4) && controllo(lunghnav, v, y, x, rotazione, p2, lp2, 4) && controllo(lunghnav, v, y, x, rotazione, p3, lp3, 4) && controllo(lunghnav, v, y, x, rotazione, p4, lp4, 4)){
                 x-=1; 
                 
             }
         }
         //muovi dx
         if(ins == 'd'){
-            if((x + (lunghnav - 1) * rotazione) <= 9&& controllo(lunghnav, v, y, x, rotazione, p1, lp1, p2, lp2, p3, lp3, p4, lp4, 3)){
+            if((x + (lunghnav - 1) * rotazione) <= 9 && controllo(lunghnav, v, y, x, rotazione, p1, lp1, 3) && controllo(lunghnav, v, y, x, rotazione, p2, lp2, 3) && controllo(lunghnav, v, y, x, rotazione, p3, lp3, 3) && controllo(lunghnav, v, y, x, rotazione, p4, lp4, 3)){
                 x += 1;
                 
             }
@@ -156,13 +139,11 @@ void inserimento(int lunghnav, char v[][10][3], int posizioni[][2], int p1[][2],
         }
         
     }while(ins != 'l');
-
     for(int i = 0; i<lunghnav;i++){
         posizioni[i][0] = y-1 + (1 - rotazione)*i;
         posizioni[i][1] = x-1 + (rotazione)*i;
         
     }
-
     printf("\033[H\033[x");
     
 }
