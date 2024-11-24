@@ -7,6 +7,42 @@ bool null_len(int v[][2]){
         return true;
     return false;
 }
+bool controllo_rot(int lunghnav, int y, int x, int p2[][2], int lp2, int rotazione){
+    if(lunghnav == 1)
+        return true;
+    
+    bool controllo = false;
+
+    if(!null_len(p2)){
+        if(rotazione == 1){
+            for(int k = 0; k< lp2; k++){
+                if(p2[k][1] == x-1){
+                    controllo = true;
+                    printf("Controllato");
+                    Sleep(300);
+                }
+            }
+
+            if(!controllo){
+                return true;
+            }
+            else{
+                if(y-1 < p2[0][0] && y+lunghnav-2 >= p2[0][0]){
+                    printf("y = %d, y + lunghnav-2 = %d, p2[0][0] = %d", y, y+lunghnav-2, p2[0][0]);
+                    Sleep(400);
+                    return false;
+                }
+                else{
+                    printf("aaaaaa\n");
+                    printf("y = %d, y + lunghnav-2 = %d, p2[0][0] = %d", y, y+lunghnav-2, p2[0][0]);
+                    Sleep(400);
+                    return true;
+                }
+            }
+        }
+    }
+    return true;
+}
 bool controllo(int lunghnav, char v[][10][3], int y, int x, int rotazione, int p2[][2], int lp2, int movimento){
     if(lunghnav == 1)
         return true;
@@ -172,7 +208,7 @@ void inserimento(int lunghnav, char v[][10][3], int posizioni[][2], int p1[][2],
         //ruota la nave
         if(ins == 'r'){
             if (rotazione){
-                if(y + lunghnav - 1 <= 10) 
+                if(y + lunghnav - 1 <= 10 && controllo_rot(lunghnav, y, x, p1, lp1, 1)) 
                 rotazione = !rotazione;  
             }
             else{
