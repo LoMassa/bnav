@@ -7,6 +7,56 @@ bool null_len(int v[][2]){
         return true;
     return false;
 }
+bool controllo_rot(int lunghnav, int y, int x, int p2[][2], int lp2, int rotazione){
+    if(lunghnav == 1)
+        return true;
+    
+    bool controllo = false;
+
+    if(!null_len(p2)){
+        if(rotazione == 1){
+            for(int k = 0; k < lp2; k++){
+                if(p2[k][1] == x-1){
+                    controllo = true;
+                }
+            }
+
+            if(!controllo){
+                return true;
+            }
+            else{
+                if(y-1 < p2[0][0] && y+lunghnav-2 >= p2[0][0]){
+                    return false;
+            }
+        }
+
+        
+        }
+        else{
+                
+                if(x-1 <= p2[0][1] &&  x-1+lunghnav >= p2[0][1]){
+                    controllo = true;
+                }
+                
+
+                if(!controllo){
+                    
+                    return true;
+                }
+                else{
+                    
+                    if(y-2+lunghnav < p2[0][0])
+                        return true;
+                    for(int k = 0; k<=lp2; k++){
+                        if(y-1 == p2[k][0])
+                            return false;
+                    }
+                }
+            }
+    
+}
+return true;
+}
 bool controllo(int lunghnav, char v[][10][3], int y, int x, int rotazione, int p2[][2], int lp2, int movimento){
     if(lunghnav == 1)
         return true;
@@ -172,11 +222,11 @@ void inserimento(int lunghnav, char v[][10][3], int posizioni[][2], int p1[][2],
         //ruota la nave
         if(ins == 'r'){
             if (rotazione){
-                if(y + lunghnav - 1 <= 10) 
+                if(y + lunghnav - 1 <= 10 && controllo_rot(lunghnav, y, x, p1, lp1, 1) && controllo_rot(lunghnav, y, x, p2, lp2, 1) && controllo_rot(lunghnav, y, x, p3, lp3, 1) && controllo_rot(lunghnav, y, x, p4, lp4, 1)) 
                 rotazione = !rotazione;  
             }
             else{
-                if(x + lunghnav - 1 <= 10)
+                if(x + lunghnav - 1 <= 10 && controllo_rot(lunghnav, y, x, p1, lp1, 0) && controllo_rot(lunghnav, y, x, p2, lp2, 0) && controllo_rot(lunghnav, y, x, p3, lp3, 0) && controllo_rot(lunghnav, y, x, p4, lp4, 0))
                         rotazione = !rotazione;
             } 
                 
