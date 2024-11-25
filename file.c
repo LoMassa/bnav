@@ -2,164 +2,189 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <Windows.h>
-bool null_len(int v[][2]){
-    if(v[0][0] == '\0' || v[0][1]== '\0')
+bool null_len(int v[][2])
+{
+    if (v[0][0] == '\0' || v[0][1] == '\0')
         return true;
     return false;
 }
-bool controllo_rot(int lunghnav, int y, int x, int p2[][2], int lp2, int rotazione){
-    if(lunghnav == 1)
+bool controllo_rot(int lunghnav, int y, int x, int p2[][2], int lp2, int rotazione)
+{
+    if (lunghnav == 1)
         return true;
-    
+
     bool controllo = false;
 
-    if(!null_len(p2)){
-        if(rotazione == 1){
-            for(int k = 0; k < lp2; k++){
-                if(p2[k][1] == x-1){
+    if (!null_len(p2))
+    {
+        if (rotazione == 1)
+        {
+            for (int k = 0; k < lp2; k++)
+            {
+                if (p2[k][1] == x - 1)
+                {
                     controllo = true;
                 }
             }
 
-            if(!controllo){
+            if (!controllo)
+            {
                 return true;
             }
-            else{
-                if(y-1 < p2[0][0] && y+lunghnav-2 >= p2[0][0]){
+            else
+            {
+                if (y - 1 < p2[0][0] && y + lunghnav - 2 >= p2[0][0])
+                {
                     return false;
+                }
             }
         }
+        else
+        {
 
-        
-        }
-        else{
-                
-                if(x-1 <= p2[0][1] &&  x-1+lunghnav >= p2[0][1]){
-                    controllo = true;
-                }
-                
+            if (x - 1 <= p2[0][1] && x - 1 + lunghnav >= p2[0][1])
+            {
+                controllo = true;
+            }
 
-                if(!controllo){
-                    
+            if (!controllo)
+            {
+
+                return true;
+            }
+            else
+            {
+
+                if (y - 2 + lunghnav < p2[0][0])
                     return true;
-                }
-                else{
-                    
-                    if(y-2+lunghnav < p2[0][0])
-                        return true;
-                    for(int k = 0; k<=lp2; k++){
-                        if(y-1 == p2[k][0])
-                            return false;
-                    }
+                for (int k = 0; k <= lp2; k++)
+                {
+                    if (y - 1 == p2[k][0])
+                        return false;
                 }
             }
-    
+        }
+    }
+    return true;
 }
-return true;
-}
-bool controllo(int lunghnav, int y, int x, int rotazione, int p2[][2], int lp2, int movimento){
-    if(lunghnav == 1)
+bool controllo(int lunghnav, int y, int x, int rotazione, int p2[][2], int lp2, int movimento)
+{
+    if (lunghnav == 1)
         return true;
 
-    
-    bool controllo=false;
-    
-    if(!null_len(p2)){
-        if(movimento==1){
-            for(int i = 0; i<lunghnav; i++){
-                for(int k = 0; k<lp2; k++){
-                    if(p2[k][0] == y-2){
+    bool controllo = false;
+
+    if (!null_len(p2))
+    {
+        if (movimento == 1)
+        {
+            for (int i = 0; i < lunghnav; i++)
+            {
+                for (int k = 0; k < lp2; k++)
+                {
+                    if (p2[k][0] == y - 2)
+                    {
                         controllo = true;
-                        
                     }
                 }
             }
-            if(!controllo)
+            if (!controllo)
                 return true;
-            else{
-                for(int i = 0; i<lunghnav; i++){
-                    for(int k = 0; k<lp2; k++){
-                        if(p2[k][1] == x-1+i*(rotazione)){  
+            else
+            {
+                for (int i = 0; i < lunghnav; i++)
+                {
+                    for (int k = 0; k < lp2; k++)
+                    {
+                        if (p2[k][1] == x - 1 + i * (rotazione))
+                        {
                             return false;
-                            
                         }
                     }
-                    
                 }
             }
         }
 
-        if(movimento == 2){
-            for(int i = 0; i<lunghnav; i++){
-                for(int k = 0; k<lp2; k++){
-                    if(p2[k][0] == y+(i)*(1-rotazione)){
+        if (movimento == 2)
+        {
+            for (int i = 0; i < lunghnav; i++)
+            {
+                for (int k = 0; k < lp2; k++)
+                {
+                    if (p2[k][0] == y + (i) * (1 - rotazione))
+                    {
                         controllo = true;
-                        
                     }
                 }
             }
-            if(!controllo)
+            if (!controllo)
                 return true;
-            else{
-                for(int i = 0; i<lunghnav; i++){
-                    for(int k = 0; k<lp2; k++){
-                        if(p2[k][1] == x-1+i*(rotazione)){  
+            else
+            {
+                for (int i = 0; i < lunghnav; i++)
+                {
+                    for (int k = 0; k < lp2; k++)
+                    {
+                        if (p2[k][1] == x - 1 + i * (rotazione))
+                        {
                             return false;
-                            
                         }
                     }
-                    
                 }
             }
         }
 
-        if(movimento == 3){
-            for(int i = 0; i<lunghnav; i++){
-                for(int k = 0; k<lp2; k++){
-                    if(p2[k][1] == x+i*rotazione)
+        if (movimento == 3)
+        {
+            for (int i = 0; i < lunghnav; i++)
+            {
+                for (int k = 0; k < lp2; k++)
+                {
+                    if (p2[k][1] == x + i * rotazione)
                         controllo = true;
                 }
             }
-            if(!controllo)
+            if (!controllo)
                 return true;
-            else{
-                for(int i = 0; i<lunghnav; i++){
-                    for(int k = 0; k<lp2; k++){
-                        if(p2[k][0] == y-1+i*(1-rotazione))
+            else
+            {
+                for (int i = 0; i < lunghnav; i++)
+                {
+                    for (int k = 0; k < lp2; k++)
+                    {
+                        if (p2[k][0] == y - 1 + i * (1 - rotazione))
                             return false;
                     }
                 }
             }
         }
 
-        if(movimento == 4){
-            for(int i = 0; i<lunghnav; i++){
-                for(int k = 0; k<lp2; k++){
-                    if(p2[k][1] == x-2)
+        if (movimento == 4)
+        {
+            for (int i = 0; i < lunghnav; i++)
+            {
+                for (int k = 0; k < lp2; k++)
+                {
+                    if (p2[k][1] == x - 2)
                         controllo = true;
                 }
             }
-            if(!controllo)
+            if (!controllo)
                 return true;
-            else{
-                for(int i = 0; i<lunghnav; i++){
-                    for(int k = 0; k<lp2; k++){
-                        if(p2[k][0] == y-1+i*(1-rotazione))
+            else
+            {
+                for (int i = 0; i < lunghnav; i++)
+                {
+                    for (int k = 0; k < lp2; k++)
+                    {
+                        if (p2[k][0] == y - 1 + i * (1 - rotazione))
                             return false;
                     }
                 }
             }
         }
-
-
-
-
-    
-   
-    
-    
-}
-return true;
+    }
+    return true;
 }
 void inserimento(int lunghnav, char v[][11][3], int posizioni[][2], int p1[][2], int p2[][2], int p3[][2], int p4[][2], int lp1, int lp2, int lp3, int lp4){
     //variabili
@@ -256,7 +281,6 @@ void inserimento(int lunghnav, char v[][11][3], int posizioni[][2], int p1[][2],
     for(int i = 0; i<lunghnav;i++){
         posizioni[i][0] = y-1 + (1 - rotazione)*i;
         posizioni[i][1] = x-1 + (rotazione)*i;
-        printf("%d %d", posizioni[i][0], posizioni[i][1]);
         
     }
     printf("\033[H\033[x");
