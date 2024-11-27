@@ -4,7 +4,7 @@
 #include <Windows.h>
 bool null_len(int v[][2])
 {
-    if (v[0][0] == '\0' || v[0][1] == '\0')
+    if (v[0][0] == '\0' && v[0][1] == '\0')
         return true;
     return false;
 }
@@ -42,7 +42,7 @@ bool controllo_rot(int lunghnav, int y, int x, int p2[][2], int lp2, int rotazio
         else
         {
 
-            if (x - 1 <= p2[0][1] && x - 1 + lunghnav >= p2[0][1])
+            if (x - 1 <= p2[0][1] && x - 1 + lunghnav > p2[0][1])
             {
                 controllo = true;
             }
@@ -73,7 +73,7 @@ bool controllo(int lunghnav, int y, int x, int rotazione, int p2[][2], int lp2, 
         return true;
 
     bool controllo = false;
-
+    
     if (!null_len(p2))
     {
         if (movimento == 1)
@@ -127,6 +127,7 @@ bool controllo(int lunghnav, int y, int x, int rotazione, int p2[][2], int lp2, 
                     {
                         if (p2[k][1] == x - 1 + i * (rotazione))
                         {
+                            printf("False, p2[%d][0] = %d, p2[%d][1]: %d", k, p2[k][0], k, p2[k][0]);
                             return false;
                         }
                     }
@@ -144,8 +145,9 @@ bool controllo(int lunghnav, int y, int x, int rotazione, int p2[][2], int lp2, 
                         controllo = true;
                 }
             }
-            if (!controllo)
+            if (!controllo){
                 return true;
+            }
             else
             {
                 for (int i = 0; i < lunghnav; i++)
@@ -169,8 +171,10 @@ bool controllo(int lunghnav, int y, int x, int rotazione, int p2[][2], int lp2, 
                         controllo = true;
                 }
             }
-            if (!controllo)
+            if (!controllo){
                 return true;
+            }
+                
             else
             {
                 for (int i = 0; i < lunghnav; i++)
@@ -221,7 +225,12 @@ void inserimento(int lunghnav, char v[][11][3], int posizioni[][2], int p1[][2],
         x1 = x;
         //muovi basso
         if(ins == 's'){
-            if((y + (lunghnav -1) * (1 - rotazione)) <= 9 && controllo(lunghnav, y, x, rotazione, p1, lp1, 2) && controllo(lunghnav, y, x, rotazione, p2, lp2, 2) && controllo(lunghnav, y, x, rotazione, p3, lp3, 2) && controllo(lunghnav, y, x, rotazione, p4, lp4, 2)){ 
+            if(inizio){
+                if(y + lunghnav - 1 <= 9)
+                    y+=1;
+                    mosso = false;
+            }
+            else if((y + (lunghnav -1) * (1 - rotazione)) <= 9 && controllo(lunghnav, y, x, rotazione, p1, lp1, 2) && controllo(lunghnav, y, x, rotazione, p2, lp2, 2) && controllo(lunghnav, y, x, rotazione, p3, lp3, 2) && controllo(lunghnav, y, x, rotazione, p4, lp4, 2)){ 
                 mosso = false;
                 y += 1;    
                 
@@ -243,7 +252,7 @@ void inserimento(int lunghnav, char v[][11][3], int posizioni[][2], int p1[][2],
         }
         //muovi dx
         if(ins == 'd'){
-            if((x + (lunghnav - 1) * rotazione) <= 10 && controllo(lunghnav, y, x, rotazione, p1, lp1, 3) && controllo(lunghnav, y, x, rotazione, p2, lp2, 3) && controllo(lunghnav, y, x, rotazione, p3, lp3, 3) && controllo(lunghnav, y, x, rotazione, p4, lp4, 3)){
+            if((x + (lunghnav - 1) * rotazione) <= 10 && controllo(lunghnav, y, x, rotazione, p1, lp1, 3) && controllo(lunghnav, y, x, rotazione, p2, lp2, 3)&& controllo(lunghnav, y, x, rotazione, p3, lp3, 3) && controllo(lunghnav, y, x, rotazione, p4, lp4, 3)){
                 x += 1;
                 inizio = false;
                 
@@ -282,16 +291,92 @@ void inserimento(int lunghnav, char v[][11][3], int posizioni[][2], int p1[][2],
         posizioni[i][0] = y-1 + (1 - rotazione)*i;
         posizioni[i][1] = x-1 + (rotazione)*i;
         
+        
     }
     printf("\033[H\033[x");
     
 }
     
+bool controllocolpo(int p1[][2], int lp1, char x, char y){
+     for(int i = 0; i < lp1; i++){
+          if((int)x-65 == p1[i][0] && (int)y-48 == p1[i][1]){
+                p1[i][1] = 15;
+                p1[i][0] = 15;
+               return true;
+          }
+     }
+     return false;
+}
+bool controlla_affondato(int p[][2], int lp){
+    for(int i = 0; i<lp; i++){
+        if(p[i][0] != 15){
+            return false;
+        }
+    }
+
+    return true;
+}
+bool spara(char matrice[][10][3], int p1[][2], int p2[][2], int p3[][2], int p4[][2], int p5[][2]){
+        for(int i = 0; i<10; i++){
+            for(int n = 0; n<10; n++){
+                for(int m = 0; m<3; m++){
+                    printf("%c", matrice[i][n][m]);
+                }
+            }
+            printf("\n");
+        }
+        char spara_riga, spara_colonna;
+        do{
+            printf("\ninserisci la riga dove sparare: ");
+            scanf(" %c", &spara_riga);
+        }while(!('A' <= spara_riga <= 'J'));
+
+        do{
+            printf("\ninserisci la colonna dove sparare: ");
+            scanf(" %c", &spara_colonna);
+        }while(!('0' <= spara_colonna <= '9'));
+
         
+        
+        if(!(controllocolpo(p1, 1, spara_riga, spara_colonna) || controllocolpo(p2, 2, spara_riga, spara_colonna) || controllocolpo(p3, 3, spara_riga, spara_colonna) || controllocolpo(p4, 4, spara_riga, spara_colonna) || controllocolpo(p5, 5, spara_riga, spara_colonna))){
+            matrice[(int)spara_riga-65][(int)spara_colonna - 48][1] = '0';
+            printf("sr: %d, sc: %d", (int)spara_riga - 65, (int)spara_colonna - 48);
+            printf("Mancato! \n");
+        }
+        else{
+            matrice[spara_riga - 65][spara_colonna - 48][1] = 'X';
+            if(controllocolpo(p1, 1, spara_riga, spara_colonna) && controlla_affondato(p1, 1))
+                printf("Colpito e affondato! ");
+            else if(controllocolpo(p1, 1, spara_riga, spara_colonna))
+                printf("\acolpito!\n ");
+            if(controllocolpo(p2, 2, spara_riga, spara_colonna) && controlla_affondato(p2, 2))
+                printf("Colpito e affondato! ");
+            else if(controllocolpo(p2, 2, spara_riga, spara_colonna))
+                printf("\acolpito!\n ");
+            if(controllocolpo(p3, 3, spara_riga, spara_colonna) && controlla_affondato(p3, 3))
+                printf("Colpito e affondato! ");
+            else if(controllocolpo(p3, 3, spara_riga, spara_colonna))
+                printf("\acolpito!\n ");
+            if(controllocolpo(p4, 4, spara_riga, spara_colonna) && controlla_affondato(p4, 4))
+                printf("Colpito e affondato! ");
+            else if(controllocolpo(p4, 4, spara_riga, spara_colonna))
+                printf("\acolpito!\n ");
+            if(controllocolpo(p5, 5, spara_riga, spara_colonna) && controlla_affondato(p5, 5))
+                printf("Colpito e affondato! ");
+            else if(controllocolpo(p5, 5, spara_riga, spara_colonna))
+                printf("\acolpito!\n ");
+        }
+        printf("\033[H\033[x");
+        return(controlla_affondato(p1, 1) && controlla_affondato(p2, 2) && controlla_affondato(p3, 3) && controlla_affondato(p4, 4) && controlla_affondato(p5, 5));
+        
+        
+     
+}        
 
 
 
 void main(){
+    
     char v[10][11][3];
     int posizioni1[1][2];           //N.B = SALVA (y,x) E NON (x, y)
     int posizioni2[2][2];
@@ -315,6 +400,60 @@ void main(){
     inserimento(5, v, posizioni5, posizioni1, posizioni2, posizioni3, posizioni4, 1, 2, 3, 4);
 
 
+    
 
-    printf("Hello");
+    char v2[10][11][3];
+    int posizioni1_2[1][2];           //N.B = SALVA (y,x) E NON (x, y)
+    int posizioni2_2[2][2];
+    int posizioni3_2[3][2];
+    int posizioni4_2[4][2];
+    int posizioni5_2[5][2];
+    for(int i = 0; i<10; i++){
+            for(int n = 0; n<11; n++){
+                v2[i][n][0] = '[';
+                v2[i][n][1] = '-';
+                v2[i][n][2] = ']';
+            }
+    }
+    
+    printf("\n");
+    inserimento(1, v2, posizioni1_2, posizioni2_2, posizioni3_2, posizioni4_2, posizioni5_2, 2, 3, 4, 5);
+    inserimento(2, v2, posizioni2_2, posizioni1_2, posizioni3_2, posizioni4_2, posizioni5_2, 1, 3, 4, 5);
+    inserimento(3, v2, posizioni3_2, posizioni1_2, posizioni2_2, posizioni4_2, posizioni5_2, 1, 2, 4, 5);
+    inserimento(4, v2, posizioni4_2, posizioni1_2, posizioni2_2, posizioni3_2, posizioni5_2, 1, 2, 3, 5);
+    inserimento(5, v2, posizioni5_2, posizioni1_2, posizioni2_2, posizioni3_2, posizioni4_2, 1, 2, 3, 4);
+
+
+
+
+    
+     //sparo
+     char m[10][10][3], m2[10][10][3];
+     bool vt1 = false, vt2 = false;
+     for(int i = 0; i<10; i++){
+            for(int n = 0; n<11; n++){
+                m[i][n][0] = '[';
+                m[i][n][1] = '-';
+                m[i][n][2] = ']';
+            }
+    }
+    for(int i = 0; i<10; i++){
+            for(int n = 0; n<11; n++){
+                m2[i][n][0] = '[';
+                m2[i][n][1] = '-';
+                m2[i][n][2] = ']';
+            }
+    }
+    while(!vt1 && !vt2){
+        vt1 = spara(m, posizioni1_2, posizioni2_2, posizioni3_2, posizioni4_2, posizioni5_2);
+        vt2 = spara(m2, posizioni1, posizioni2, posizioni3, posizioni4, posizioni5);
+    }
+    
+    if(vt1){
+        printf("Giocatore 1 ha vinto!");
+    }
+    else{
+        printf("Giocatore 2 ha vinto");
+    }
+    
 }
