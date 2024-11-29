@@ -366,42 +366,44 @@ bool spara(char matrice[][11][3], int p1[][2], int p2[][2], int p3[][2], int p4[
         if(!(colpo_passivo(p1, 1, spara_riga, spara_colonna) || colpo_passivo(p2, 2, spara_riga, spara_colonna) || colpo_passivo(p3, 3, spara_riga, spara_colonna) || colpo_passivo(p4, 4, spara_riga, spara_colonna) || colpo_passivo(p5, 5, spara_riga, spara_colonna))){
             matrice[(int)spara_riga-65][(int)spara_colonna - 47][1] = '0';
             //printf("sr: %d, sc: %d", (int)spara_riga - 65, (int)spara_colonna - 48);
-            printf("Mancato! \n");
+            printf("Mancato!              \n");
         }
         else{
             matrice[spara_riga - 65][spara_colonna - 47][1] = 'X';
             if(controllocolpo(p1, 1, spara_riga, spara_colonna) && controlla_affondato(p1, 1)){
                 printf("\aColpito e affondato!\a\n ");
             }
-            if(colpo_passivo(p2, 2, spara_riga, spara_colonna) && controlla_affondato(p2, 2)){
+            if(colpo_passivo(p2, 2, spara_riga, spara_colonna)){
                 controllocolpo(p2, 2, spara_riga, spara_colonna);
-                printf("\aColpito e affondato!\a\n ");
+                if(controlla_affondato(p2, 2))
+                    printf("\aColpito e affondato!\a\n ");
+                else    
+                    printf("\acolpito!             \n ");
             }
-            else if(controllocolpo(p2, 2, spara_riga, spara_colonna)){
-                printf("\acolpito!\n ");
-            }
-            if(colpo_passivo(p3, 3, spara_riga, spara_colonna) && controlla_affondato(p3, 3)){
-                printf("\aColpito e affondato!\a\n ");
+            if(colpo_passivo(p3, 3, spara_riga, spara_colonna)){
                 controllocolpo(p3, 3, spara_riga, spara_colonna);
+                if(controlla_affondato(p3, 3))
+                    printf("\aColpito e affondato!\a\n ");
+                else
+                    printf("\acolpito!             \n ");
             }
-            else if(controllocolpo(p3, 3, spara_riga, spara_colonna)){
-                printf("\acolpito!\n ");
-            }
-            if(colpo_passivo(p4, 4, spara_riga, spara_colonna) && controlla_affondato(p4, 4)){
-                printf("\aColpito e affondato!\a\n ");
+            if(colpo_passivo(p4, 4, spara_riga, spara_colonna)){
                 controllocolpo(p4, 4, spara_riga, spara_colonna);
+                if(controlla_affondato(p4, 4))
+                    printf("\aColpito e affondato!\a\n ");
+                else
+                    printf("\acolpito!             \n ");
             }
-            else if(controllocolpo(p4, 4, spara_riga, spara_colonna)){
-                printf("\acolpito!\n ");
-            }
-            if(colpo_passivo(p5, 5, spara_riga, spara_colonna) && controlla_affondato(p5, 5)){
-                printf("\aColpito e affondato!\a\n ");
+            if(colpo_passivo(p5, 5, spara_riga, spara_colonna)){
                 controllocolpo(p5, 5, spara_riga, spara_colonna);
+                if(controlla_affondato(p5, 5))
+                    printf("\aColpito e affondato!\a\n ");
+                else    
+                    printf("\acolpito!             \n ");
+                
             }
             
-            else if(controllocolpo(p5, 5, spara_riga, spara_colonna)){
-                printf("\acolpito!\n ");
-            }
+            
         }
         printf("\033[H\033[x");
         return(controlla_affondato(p1, 1) && controlla_affondato(p2, 2) && controlla_affondato(p3, 3) && controlla_affondato(p4, 4) && controlla_affondato(p5, 5));
